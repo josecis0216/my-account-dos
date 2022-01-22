@@ -1,0 +1,71 @@
+image: atlassian/default-image:2
+
+definitions:
+  caches:
+    my-account: node_modules
+  steps:
+    - step: &detect-merge-conflicts
+        name: "Detect Merge Conflicts"
+        script:
+          # If merge conflict text is found, stop the pipeline and throw an error.
+          # Grep returns a bad status code if the text isn't found, so we negate the status code
+          - (! grep -RE --exclude=bitbucket-pipelines.yml '<<<<<<< HEAD')
+          - (! grep -RE --exclude=bitbucket-pipelines.yml '>>>>>>> ')
+
+    - step: &build-vue
+        name: "Compile Vue"
+        image: vuejs/ci:latest
+        caches:
+          - my-account
+        artifacts:
+          - dist/my-account_*.js
+        script:
+          - ./build.sh
+          - ls dist
+          - mv dist/my-account.js dist/my-account_$BITBUCKET_BRANCH.js
+          - ls dist
+
+    - step: &upload-s3
+        name: "Upload to S3"
+        script:
+          - pipe: atlassian/aws-s3-deploy:1.1.0
+            variables:
+              AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+              AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+              S3_BUCKET: $S3_BUCKET_PATH
+              LOCAL_PATH: 'dist'
+              ACL: 'public-read'
+              DEBUG: 'true'
+
+    - step: &invalidate-cloudfront
+        name: "Clear CloudFront Cache"
+        script:
+          - pipe: atlassian/aws-cloudfront-invalidate:0.6.0
+            variables:
+              AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+              AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+              DISTRIBUTION_ID: $AWS_CLOUDFRONT_DISTRIBUTION_ID
+              PATHS: "/v/my-account/my-account_$BITBUCKET_BRANCH.js"
+              DEBUG: "true"
+
+
+pipelines:
+  pull-requests:
+    '**':
+      - step: *detect-merge-conflicts
+
+  branches:
+    dev:
+      - step: *build-vue
+      - step: *upload-s3
+      - step: *invalidate-cloudfront
+    master:
+      - step: *build-vue
+      - step: *upload-s3
+      - step: *invalidate-cloudfront
+    production:
+      - step: *build-vue
+      - step: *upload-s3
+      - step: *invalidate-cloudfront

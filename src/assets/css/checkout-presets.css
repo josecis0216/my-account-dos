@@ -1,0 +1,192 @@
+.transitions {
+    transition: all 0.6s ease-in-out 0s;
+    -moz-transition: all 0.6s ease-in-out 0s;
+    -webkit-transition: all 0.6s ease-in-out 0s;
+  }
+  .normal-transitions {
+    transition: all 0.4s ease-in-out 0s;
+    -moz-transition: all 0.4s ease-in-out 0s;
+    -webkit-transition: all 0.4s ease-in-out 0s;
+  }
+  .quick-transitions {
+    transition: all 0.2s ease-in-out 0s;
+    -moz-transition: all 0.2s ease-in-out 0s;
+    -webkit-transition: all 0.2s ease-in-out 0s;
+  }
+  .checkout-app {
+    margin-top: 0 !important;
+  }
+  .checkout-app .empty-cart-checkout {
+    padding: 30vh 0;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .checkout-app .empty-cart-checkout button {
+    display: block;
+    margin: 30px auto;
+  }
+  @media only screen and (max-width: 960px) {
+    .checkout-app .empty-cart-checkout {
+      padding: 20vh 0;
+    }
+    .checkout-app .empty-cart-checkout h1 {
+      font-size: 22px;
+    }
+  }
+  #account-app label {
+    font-size: 12px;
+  }
+  
+  #account-app .field .form-field input {
+    width: 100% !important;
+    max-width: 100%;
+  }
+  #account-app .field .form-field input::placeholder {
+    opacity: 0 !important;
+  }
+  #account-app .tooltip_field {
+    align-items: center;
+    display: flex;
+    width: 100%;
+  }
+  #account-app .form-field {
+    width: 100%;
+  }
+  #account-app .tooltip_field .form-field {
+    width: 100%;
+  }
+  #account-app .tooltip_field .form-field input {
+    width: 98% !important;
+  }
+  @media only screen and (max-width: 960px) {
+    #account-app .tooltip_field .form-field input {
+      width: 95% !important;
+    }
+  }
+  #account-app .form-field {
+    display: flex;
+    flex-flow: column-reverse;
+    position: relative;
+    /**
+          * Add a transition to the label and input.
+          * I'm not even sure that touch-action: manipulation works on
+          * inputs, but hey, it's new and cool and could remove the
+          * pesky delay.
+          */
+    /**
+          * Translate down and scale the label up to cover the placeholder,
+          * when following an input (with placeholder-shown support).
+          * Also make sure the label is only on one row, at max 2/3rds of the
+          * field—to make sure it scales properly and doesn't wrap.
+          */
+    /**
+          * By default, the placeholder should be transparent. Also, it should
+          * inherit the transition.
+          */
+    /**
+          * Show the placeholder when the input is focused.
+          */
+    /**
+          * When the element is focused, remove the label transform.
+          * Also, do this when the placeholder is _not_ shown, i.e. when
+          * there's something in the input at all.
+          */
+  }
+  #account-app .form-field .tooltip-checkout {
+    display: block;
+    margin-left: -15px;
+    width: 20px;
+    height: 40px;
+    text-align: center;
+    position: relative;
+  }
+  #account-app .form-field .tooltip-checkout:before {
+    content: "\f05a";
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    display: block;
+  }
+  #account-app .form-field label,
+  #account-app .form-field input {
+    transition: all 0.2s;
+    touch-action: manipulation;
+  }
+  #account-app .form-field input {
+    padding: 22px 15px 10px !important;
+    background: #F7F7F7;
+    color: #00B1E3;
+    outline: #00B1E3;
+    position: relative;
+    border: 1px solid #F7F7F7;
+  }
+  #account-app .form-field label {
+    font-size: 14px;
+    position: absolute;
+    left: 15px;
+    color: #8E8E8E;
+    pointer-events: none;
+  }
+  #account-app .form-field input:focus {
+    outline: 0;
+    border-color: #00B1E3;
+  }
+  #account-app .form-field input:placeholder-shown + label {
+    cursor: text;
+    max-width: 66.66%;
+    white-space: nowrap;
+    overflow: hidden;
+    transform-origin: left bottom;
+    top: 50%;
+    transform: translate(0, -50%);
+    padding: 0;
+  }
+  #account-app .form-field ::-webkit-input-placeholder {
+    opacity: 0;
+    transition: inherit;
+  }
+  #account-app .form-field input:focus::-webkit-input-placeholder {
+    opacity: 1;
+  }
+  #account-app .form-field input:focus + label {
+    top: auto;
+    transform: translate(0, -37px);
+  }
+  #account-app .form-field input:not(:placeholder-shown) + label,
+  #account-app .form-field input:focus + label {
+    transform: translate(0, -37px);
+    cursor: pointer;
+    left: 15px;
+    font-size: 10px;
+  }
+  
+  #account-app .modal-overlay .form-field input {
+    padding: 10px 15px 10px !important;
+    background: #F5F5F5;
+    color: #313638;
+    outline: #00B1E3;
+    position: relative;
+    border: 1px solid #E2E2E2;
+    margin-top: 0;
+  }
+  #account-app .modal-overlay .forgot_password .field .form-field input {
+    padding: 22px 15px 10px !important;
+  }
+  #account-app .modal-overlay .form-field .checkbox-container.radio {
+    margin-top: 15px;
+    margin-bottom: -15px;
+  }
+  #account-app .modal-overlay .field {
+    margin-bottom: 5px;
+  }
+  #account-app .modal-overlay .form h6 {
+    margin-top: 0;
+  }
+
+  img.profile-image {
+    border-radius: 100px;
+    height: 80px;
+    width: 80px;
+    overflow: hidden;
+    position: relative;  
+  } 

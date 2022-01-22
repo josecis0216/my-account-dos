@@ -1,0 +1,13 @@
+version: "3.1"
+
+services:
+  wordpress:
+    image: node:lts-alpine
+    container_name: my-account
+    restart: always
+    ports:
+      - 8003:8080
+    entrypoint: .docker/docker-entrypoint.sh
+    working_dir: /app
+    volumes:
+      - ./:/app
