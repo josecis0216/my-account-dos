@@ -23,7 +23,7 @@
             <p class="subtitle-2">
               <span>
                 <h6 class="subtitle-2">Name</h6>
-                {{ method.name }}</span
+                {{ method.card_name }}</span
               >
               <br />
               <span
@@ -45,8 +45,8 @@
               <TextField
                 v-if="editPayment"
                 name="name"
-                :value="method.name"
-                @update-name="handleInputPayment($event, 'PaymentMethod')"
+                :value="method.card_name"
+                @update-name="handleCardInfo($event, 'card_name' method)"
               />
             </transition>
           </div>
@@ -59,7 +59,7 @@
                 class="hide-label"
                 placeholder="0000 0000 0000 0000"
                 :value="method.card_number"
-                @update-card_number="handleInput($event, 'PaymentMethod')"
+                @update-card_number="handleCardInfo($event, 'card_number', method)"
               />
             </transition>
           </div>
@@ -73,7 +73,7 @@
                 placeholder="00/00"
                 :value="expiration_date"
                 @update-expiration_date="
-                  handleInput($event, 'PaymentMethod', 'account')
+                  handleCardInfo($event, 'card_expiration', method)
                 "
               />
             </transition>
@@ -87,7 +87,7 @@
                 class="hide-label"
                 placeholder="000"
                 :value="cvv"
-                @update-cvv="handleInput($event, 'PaymentMethod', 'account')"
+                @update-cvv="handleCardInfo($event, 'cvv', method)"
               />
             </transition>
           </div>
@@ -324,6 +324,10 @@ export default {
         value,
         errorType: `${key}Error`
       });
+    },
+    handleCardInfo(event, key, payload) {
+      payload.key = event;
+      this.$store.dispatch('account/setPaymentMethod', payload);
     },
     // handleInputPaymentInfo(event, type, actionType) {
     //   console.log("");

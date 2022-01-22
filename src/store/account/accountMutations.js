@@ -9,11 +9,12 @@ export default {
     state.payment_methods = payload;
   },
   setPaymentMethod(state, payload) {
-    state.payment_methods[0].lastDigits = payload.lastDigits;
-    state.payment_methods[0].type = payload.type;
-    state.payment_methods[0].card_number = "";
-    state.payment_methods[0].card_expiration = "";
-    state.payment_methods[0].cvv = "";
+    // state.payment_methods[0].lastDigits = payload.lastDigits;
+    // state.payment_methods[0].type = payload.type;
+    // state.payment_methods[0].card_number = "";
+    // state.payment_methods[0].card_expiration = "";
+    // state.payment_methods[0].cvv = "";
+    state.payment_methods = payload;
   },
   setIsEditingInfoStatus(state, payload) {
     state.isEditingInfoStatus = payload;
